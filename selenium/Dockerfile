@@ -7,6 +7,6 @@ RUN apt-get update && apt-get upgrade -y \
 	&& dpkg -i google-chrome-stable_current_amd64.deb \
 	&& rm google-chrome-stable_current_amd64.deb
 	
-RUN groupadd -r lars && useradd -r -g lars -m lars
-USER lars
-WORKDIR /home/lars	
+RUN groupadd -r build && useradd -r -g build -m build
+USER build
+WORKDIR /home/build	
