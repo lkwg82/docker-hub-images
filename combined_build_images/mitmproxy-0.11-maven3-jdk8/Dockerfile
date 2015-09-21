@@ -18,8 +18,8 @@ RUN curl -fsSL http://archive.apache.org/dist/maven/maven-3/$MAVEN_VERSION/binar
 
 ENV MAVEN_HOME /usr/share/maven
 
-RUN wget  https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
-RUN apt-get update \
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb \
+    && apt-get update \
     && apt-get install -y libgtk2.0-0 libappindicator1 \
     && apt-get install -y xdg-utils libasound2  libnss3  libxss1  gconf-service libgconf-2-4 libpango1.0-0 \
     && dpkg -i google-chrome-stable_current_amd64.deb \
