@@ -6,7 +6,9 @@ RUN apt-get update \
     && apt-get update \
     && echo debconf shared/accepted-oracle-license-v1-1 select true | debconf-set-selections \
     && echo debconf shared/accepted-oracle-license-v1-1 seen true | debconf-set-selections \
-    && apt-get install -y oracle-java8-installer curl
+    && apt-get install -y oracle-java8-installer curl \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/*
 
 ENV MAVEN_VERSION 3.3.3
 
@@ -21,4 +23,6 @@ RUN apt-get update \
     && apt-get install -y libgtk2.0-0 libappindicator1 \
     && apt-get install -y xdg-utils libasound2  libnss3  libxss1  gconf-service libgconf-2-4 libpango1.0-0 \
     && dpkg -i google-chrome-stable_current_amd64.deb \
-    && apt-get install -y xvfb
+    && apt-get install -y xvfb \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/* /tmp/*
