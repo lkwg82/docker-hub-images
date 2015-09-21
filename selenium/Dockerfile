@@ -8,6 +8,3 @@ RUN apt-get update && apt-get upgrade -y \
 	&& rm google-chrome-stable_current_amd64.deb \
 	&& apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 	
-RUN groupadd -r build && useradd -r -g build -m build
-USER build
-WORKDIR /home/build	
