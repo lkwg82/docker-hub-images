@@ -1,4 +1,4 @@
-FROM maven:3-jdk-8
+FROM java:8-jdk
 
 RUN apt-get update && apt-get upgrade -y \
         && apt-get install -y  libappindicator1 libxss1 libpango1.0-0 xdg-utils fonts-liberation libexif12 \
