@@ -2,8 +2,8 @@ FROM jenkins
 
 USER root
 
-ENV DOCKER_ENGINE_VERSION  1.9.1-0~jessie
-ENV DOCKER_COMPOSE_VERSION 1.6.0
+ENV DOCKER_ENGINE_VERSION  1.11.0-0~jessie
+ENV DOCKER_COMPOSE_VERSION 1.7.0
 
 # installation steps from https://docs.docker.com/engine/installation/linux/debian/
 RUN apt-get update \
