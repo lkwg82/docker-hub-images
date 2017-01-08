@@ -1,9 +1,9 @@
-FROM jenkins
+FROM jenkins:2.32.1
 
 USER root
 
-ENV DOCKER_ENGINE_VERSION  1.11.0-0~jessie
-ENV DOCKER_COMPOSE_VERSION 1.7.0
+ENV DOCKER_ENGINE_VERSION  1.12.5-0~debian-jessie
+ENV DOCKER_COMPOSE_VERSION 1.9.0
 
 # installation steps from https://docs.docker.com/engine/installation/linux/debian/
 RUN apt-get update \
@@ -17,8 +17,14 @@ RUN apt-get update \
     && gpasswd -a jenkins docker \
     && rm -rf /var/lib/apt/lists/*
 
-RUN curl -L https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+
+RUN echo "latest version of- compose" \
+    && curl -sL https://api.github.com/repos/docker/compose/releases/latest | grep -E "tag_name|published_at" \
+    && curl -sL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose
 
 USER jenkins
+
+HEALTHCHECK --interval=30s --timeout=3s --retries=10 \
+  CMD curl -sL http://localhost:8080 || exit 1
 
