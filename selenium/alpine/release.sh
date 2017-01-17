@@ -5,6 +5,8 @@ set -e
 image="release_$RANDOM"
 docker build -t $image .
 
+./test.sh
+
 function finish {
         echo -n "cleanup: "
         docker rmi  $image
