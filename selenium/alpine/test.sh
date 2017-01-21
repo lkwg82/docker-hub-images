@@ -12,7 +12,7 @@ function finish {
 trap finish EXIT
 
 # helper funcs
-function de { docker exec -ti ${cid} "$@"; }
+function de { docker exec  ${cid} "$@"; }
 function fail { echo "fail"; exit $1; }; 
 
 # test funcs
