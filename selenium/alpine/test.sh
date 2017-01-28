@@ -26,7 +26,7 @@ t " chromedriver installed"
 tde chromedriver --help
 
 t " Xvfb installed"
-tde Xvfb -help 
+tde Xvfb -help 2>/dev/null
 
 t " Xvfb running"
 tde 'pgrep Xvfb'
@@ -35,4 +35,4 @@ t " chromium installed"
 tde ash -c "export DISPLAY=:10; chromium-browser --version"
 
 t " java installed"
-tde java -version
+tde java -version 2>/dev/null
