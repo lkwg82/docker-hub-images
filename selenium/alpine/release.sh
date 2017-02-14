@@ -3,7 +3,7 @@
 set -e
 
 image="release_$RANDOM"
-docker build -t $image .
+docker build --no-cache --pull -t $image .
 
 ./test.sh
 
