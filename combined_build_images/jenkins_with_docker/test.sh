@@ -3,26 +3,30 @@
 set -e
 
 docker build -t test .
-cid=$(docker run --network=host -v /var/run/docker.sock:/var/run/docker.sock -d test)
+cid=$(docker run -d -v "/var/run/docker.sock:/var/run/docker.sock" test)
 
 function finish {
+	echo -n "cleanup: "
 	docker rm -f ${cid}  
 }
 trap finish EXIT
 
+# helper funcs
+function de { docker exec -ti ${cid} $@; }
+
+# test funcs
+function t  { echo -n " test $@ ... "; }
+function tde { de $@ >/dev/null  && echo "ok" || (echo "fail" && exit 1) }
 
 # tests
 echo "testing"
-docker exec ${cid} docker --version > /dev/null
-docker exec ${cid} docker run alpine echo 'Hello world' > /dev/null
-docker exec ${cid} docker-compose --version > /dev/null
 
-sleep 10
-for i in `seq 1 10`; do
-	echo " checking status $i "
-	[ "$(docker inspect --format '{{.State.Health.Status}}' $cid)" == "healthy" ] && echo "... success " && exit 0
-	sleep 5
-done	
+t " docker installed"
+tde docker --version
 
-echo "failed"
-exit 1
+t " docker-compose installed"
+tde docker-compose --version
+
+t " checking health of container (wait a little)"
+sleep 15
+docker inspect --format='{{json .State.Health.Status}}' $cid | grep -q 'healthy'

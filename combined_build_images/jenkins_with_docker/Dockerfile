@@ -1,30 +1,35 @@
-FROM jenkins:2.32.1
+FROM jenkins:2.60.3
 
 USER root
 
-ENV DOCKER_ENGINE_VERSION  1.12.5-0~debian-jessie
-ENV DOCKER_COMPOSE_VERSION 1.9.0
+ENV DOCKER_COMPOSE_VERSION 1.16.1
 
-# installation steps from https://docs.docker.com/engine/installation/linux/debian/
-RUN apt-get update \
-    && apt-get install apt-transport-https ca-certificates rsync -y \
-    && apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D \
-    && echo "deb https://apt.dockerproject.org/repo debian-jessie main" > /etc/apt/sources.list.d/docker.list \
+# https://docs.docker.com/engine/installation/linux/docker-ce/ubuntu/#install-using-the-repository
+RUN    apt-get update \
+    && apt-get -y install \
+               apt-transport-https \
+               ca-certificates \
+               curl \
+               software-properties-common \
+    && curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - > /dev/null \
+    && apt-key fingerprint 0EBFCD88 2>/dev/null | grep -q "9DC8 5822 9FC7 DD38 854A  E2D8 8D81 803C 0EBF CD88"\
+    && add-apt-repository \
+      "deb [arch=amd64] https://download.docker.com/linux/debian \
+      $(lsb_release -cs) \
+      stable" \
     && apt-get update \
-    && apt-cache policy docker-engine \
-    && apt-get upgrade -y \
-    && apt-get install docker-engine=$DOCKER_ENGINE_VERSION -y \
-    && gpasswd -a jenkins docker \
-    && rm -rf /var/lib/apt/lists/*
-
+    && apt-get -y install docker-ce \
+    && apt-get clean
 
 RUN echo "latest version of- compose" \
     && curl -sL https://api.github.com/repos/docker/compose/releases/latest | grep -E "tag_name|published_at" \
-    && curl -sL https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose \
+    && curl -L --fail https://github.com/docker/compose/releases/download/$DOCKER_COMPOSE_VERSION/run.sh -o /usr/local/bin/docker-compose \
     && chmod +x /usr/local/bin/docker-compose
+
+RUN gpasswd -a jenkins docker
 
 USER jenkins
 
 HEALTHCHECK --interval=30s --timeout=3s --retries=10 \
-  CMD curl -sL http://localhost:8080 || exit 1
+  CMD test -f /var/run/docker.sock && (curl -sL http://localhost:8080 || exit 1)
 
