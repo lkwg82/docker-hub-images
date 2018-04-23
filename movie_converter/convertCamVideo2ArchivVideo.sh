@@ -11,22 +11,7 @@ function checkInstalled {
 	type $1 >/dev/null 2>&1 && echo "ok" || { echo "fail"; exitEnter; }
 }
 
-checkInstalled exiftool
-
-function determineMaxVideoSize(){
-	local source=$1
-	local width=$(exiftool $source | grep -i "^Image Width" | sed -e 's#.*: ##');
-	local height=$(exiftool $source | grep -i "^Image Height" | sed -e 's#.*: ##');
-	
-	local max=$(($width>$height ? $width : $height));
-	
-	if [ $max -gt 1280 ];
-	then
-		size=hd720;
-	else
-		size=$width"x"$height;
-	fi
-}
+checkInstalled ffmpeg
 
 function _convert(){
 	local source=$1
@@ -65,7 +50,6 @@ function _convert(){
 }
 
 export -f _convert
-export -f determineMaxVideoSize
 
 find -maxdepth 1 -type f -name "*MOV" -o -name "*3gp" -o -name "*mp4" | grep -v ".out.mp4" | xargs -n1 -I {} bash -c '_convert {}'
 #_convert $1
