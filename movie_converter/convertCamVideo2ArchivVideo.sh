@@ -43,7 +43,7 @@ function _convert(){
 			$videoOpts \
 			$targetTmp"
 
-		$cmd && \
+		nice $cmd && \
 			mv $targetTmp $target && \
 			touch -r "$source" "$target" 
 	fi
