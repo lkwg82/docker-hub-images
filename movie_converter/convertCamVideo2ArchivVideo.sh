@@ -33,7 +33,7 @@ function _convert(){
 		
 		
 #		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M"
-		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow -threads 1"
+		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow"
 		#~ local videoOpts="-c:v copy"
 		#~ local videoOpts="-codec copy"
 		
