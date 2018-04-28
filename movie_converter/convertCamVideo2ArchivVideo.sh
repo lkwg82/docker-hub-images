@@ -3,7 +3,7 @@
 set -e
 set -x
 
-size=-1
+export globalargs="$@"
 
 function exitEnter { echo $1; echo "press ENTER to exit"; read; }
 function checkInstalled {
@@ -27,13 +27,13 @@ function _convert(){
 							
 		#~ local audioOpts="-acodec libmp3lame -ab 160000  `# mp3 160kB/s`"
 		# https://trac.ffmpeg.org/wiki/Encode/MP3
-		local audioOpts="-acodec libmp3lame -q:a 4 -ar `# mp3 140-185kbit/s`"
+		local audioOpts="-acodec libmp3lame -q:a 4 -ar 48000`# mp3 140-185kbit/s`"
 		#~ local audioOpts="-c:a copy"
 		#~ local audioOpts=""
 		
 		
-#		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M -ar 48000"
-		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow -ar 48000"
+#		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M "
+		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow"
 		#~ local videoOpts="-c:v copy"
 		#~ local videoOpts="-codec copy"
 		
@@ -43,7 +43,7 @@ function _convert(){
 			$videoOpts \
 			$targetTmp"
 
-		nice $cmd && \
+		nice $cmd $globalargs && \
 			mv $targetTmp $target && \
 			touch -r "$source" "$target" 
 	fi
