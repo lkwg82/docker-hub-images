@@ -27,13 +27,13 @@ function _convert(){
 							
 		#~ local audioOpts="-acodec libmp3lame -ab 160000  `# mp3 160kB/s`"
 		# https://trac.ffmpeg.org/wiki/Encode/MP3
-		local audioOpts="-acodec libmp3lame -q:a 4  `# mp3 140-185kbit/s`"
+		local audioOpts="-acodec libmp3lame -q:a 4 -ar `# mp3 140-185kbit/s`"
 		#~ local audioOpts="-c:a copy"
 		#~ local audioOpts=""
 		
 		
-#		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M"
-		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow"
+#		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M -ar 48000"
+		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow -ar 48000"
 		#~ local videoOpts="-c:v copy"
 		#~ local videoOpts="-codec copy"
 		
