@@ -44,6 +44,7 @@ function _convert(){
 			$videoOpts \
 			$targetTmp"
 
+        echo "RUNNING $cmd"
 		nice $cmd $globalargs && \
 			mv $targetTmp $target && \
 			touch -r "$source" "$target" 
