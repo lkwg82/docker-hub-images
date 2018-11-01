@@ -15,7 +15,8 @@ checkInstalled ffmpeg
 
 function _convert(){
 	local source=$1
-	local target="$1.out.mp4"
+#	local target="$1.out.mp4"
+	local target="$1.out.avi"
 	local targetTmp="$1.tmp.out.mp4"
 	if [ -f $target ];
 	then
@@ -32,8 +33,8 @@ function _convert(){
 		#~ local audioOpts=""
 		
 		
-#		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M "
-		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow"
+		local videoOpts="-vcodec libx264 -maxrate 4000k -bufsize 1M "
+#		local videoOpts="-vcodec libx265 -maxrate 4000k -bufsize 1M -preset veryslow"
 		#~ local videoOpts="-c:v copy"
 		#~ local videoOpts="-codec copy"
 		
@@ -51,5 +52,5 @@ function _convert(){
 
 export -f _convert
 
-find -type f -iname "*MOV" -o -iname "*3gp" -o -iname "*mp4" -o -iname "*.avi" | grep -v ".out.mp4" | xargs -n1 -I {} bash -c '_convert {}'
+find -type f -iname "*MOV" -o -iname "*3gp" -o -iname "*mp4" -o -iname "*.avi" | grep -v ".out.avi" | xargs -n1 -I {} bash -c '_convert {}'
 #_convert $1
