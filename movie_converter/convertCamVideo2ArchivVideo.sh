@@ -46,7 +46,7 @@ function _convert(){
 			$targetTmp"
 
         echo "RUNNING $cmd"
-		nice $cmd $globalargs && \
+		nice -n20 $cmd $globalargs && \
 			mv $targetTmp $target && \
 			touch -r "$source" "$target" 
 	fi
