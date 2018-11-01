@@ -1,4 +1,4 @@
-FROM alpine:3.7
+FROM alpine:3.8
 MAINTAINER Lars K.W. Gohlke <lkwg82@gmx.de>
 
 RUN apk update \
