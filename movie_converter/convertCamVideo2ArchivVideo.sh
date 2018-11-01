@@ -52,5 +52,5 @@ function _convert(){
 
 export -f _convert
 
-find -type f -iname "*MOV" -o -iname "*3gp" -o -iname "*mp4" -o -iname "*.avi" | grep -v ".out.avi" | xargs -n1 -I {} bash -c '_convert {}'
+find -type f -iname "*MOV" -o -iname "*3gp" -o -iname "*mp4" -o -iname "*.avi" | grep -v ".h264.avi" | xargs -n1 -I {} bash -c '_convert {}'
 #_convert $1
