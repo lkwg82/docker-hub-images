@@ -16,7 +16,7 @@ checkInstalled ffmpeg
 function _convert(){
 	local source=$1
 #	local target="$1.out.mp4"
-	local target="$1.out.avi"
+	local target="$1.h264.avi"
 	local targetTmp="$1.tmp.out.mp4"
 	if [ -f $target ];
 	then

@@ -41,7 +41,7 @@ cmd="docker run --rm -ti \
 
 #set -x
 
-testFile="VID_20180423_205710.mp4.out.avi";
+testFile="VID_20180423_205710.mp4.h264.avi";
 rm -f ${testFile}
 rm -f subdir/${testFile}
 
