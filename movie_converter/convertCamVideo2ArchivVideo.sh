@@ -41,7 +41,8 @@ function _convert(){
 
 		local cmd="ffmpeg -i $source \
 			$audioOpts \
-			$videoOpts \
+			$videoOpts
+			-y `# overwrite files `\
 			$targetTmp"
 
         echo "RUNNING $cmd"
